@@ -1,0 +1,41 @@
+usage: helioscheduler.py [-h] [-o filename] start interval duration intensity
+
+positional arguments:
+  start        Start time.
+  interval     Interval between captures (cannot be 00:00:00).
+  duration     Duration of lights-off period (cannot be 00:00:00).
+  intensity    Intensity of lights when on (0 to 1000).
+
+optional arguments:
+  -h, --help   show this help message and exit
+  -o filename  File to output (default schedule.txt)
+
+
+################
+# INSTALLATION #
+################
+
+The script requires Python 3. There are no other dependencies. Simply drop the .py file
+anywhere convenient.
+
+###########
+# RUNNING #
+###########
+
+Run the script using Python 3, and provide it a start time (i.e. the time of the first acquisition)
+interval between lights-off periods, duration of the lights-off, and intensity of the lights in
+the 0-1000 scale used by the Heliospectra software. Note that this script will always set the
+5700K white lights to be off since they phosphoresce considerably.
+
+All times are in 24-hour local time. So, if an imaging experiment was run in constant light set
+to 150, with images being taken every two hours starting at 1:00 AM, and the lights-off period being
+seven minutes, the invocation would be
+
+python3 helioscheduler.py 01:00:00 02:00:00 00:05:00 150
+
+The script will then generate schedule.txt in the directory the script was run from. This can
+be loaded into the Heliospectra web interface directly.
+
+This script is not capable of generating a schedule for an LD imaging experiment since it does
+not have options for an extended dark period. However, this can be easily achieved by removing
+the appropriate entries from the schedule in the Heliospectra web interface.

@@ -1,0 +1,119 @@
+<<<<<<< HEAD
+usage: helioscheduler.py [-h] [-o filename] start interval duration intensity
+
+positional arguments:
+  start        Start time.
+  interval     Interval between captures (cannot be 00:00:00).
+  duration     Duration of lights-off period (cannot be 00:00:00).
+  intensity    Intensity of lights when on (0 to 1000).
+
+optional arguments:
+  -h, --help   show this help message and exit
+  -o filename  File to output (default schedule.txt)
+=======
+usage: imager.py [-h] [-o OUT] [-e EXPOSURE] start end interval
+
+positional arguments:
+  start                 Starting date/time (24-hour, MM/DD/YYYY HH:MM:SS)
+  end                   Ending date/time (24-hour, MM/DD/YYYY HH:MM:SS)
+  interval              Interval between acquisitions (HH:MM:SS)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUT, --out OUT     Output directory (default current directory)
+  -e EXPOSURE, --exposure EXPOSURE
+                        Exposure time in milliseconds (exposure set in micro-manager if not specified)
+>>>>>>> 2acafbc5e9f611fc40ddd0325e59d15e14a3592f
+
+
+################
+# INSTALLATION #
+################
+
+<<<<<<< HEAD
+The script requires Python 3. There are no other dependencies. Simply drop the .py file
+anywhere convenient.
+=======
+Just drop the .py file in any directory.
+
+This program depends on Python 3 and "PIL" and "pycromanager" Python packages. Install these on your
+Python installation using pip:
+
+python3 -m pip install --upgrade Pillow
+python3 -m pip install --upgrade pycromanager
+>>>>>>> 2acafbc5e9f611fc40ddd0325e59d15e14a3592f
+
+###########
+# RUNNING #
+###########
+
+<<<<<<< HEAD
+Run the script using Python 3, and provide it a start time (i.e. the time of the first acquisition)
+interval between lights-off periods, duration of the lights-off, and intensity of the lights in
+the 0-1000 scale used by the Heliospectra software. Note that this script will always set the
+5700K white lights to be off since they phosphoresce considerably.
+
+All times are in 24-hour local time. So, if an imaging experiment was run in constant light set
+to 150, with images being taken every two hours starting at 1:00 AM, and the lights-off period being
+seven minutes, the invocation would be
+
+python3 helioscheduler.py 01:00:00 02:00:00 00:05:00 150
+
+The script will then generate schedule.txt in the directory the script was run from. This can
+be loaded into the Heliospectra web interface directly.
+
+This script is not capable of generating a schedule for an LD imaging experiment since it does
+not have options for an extended dark period. However, this can be easily achieved by removing
+the appropriate entries from the schedule in the Heliospectra web interface.
+=======
+First, start micro-manager >=2.0. If this is your first time running this program, ensure that
+the micro-manager server is started by going to Tools->Options, and then ensuring
+"Run server on port 4827" is checked. Select the camera settings you want to use in the
+micro-manager window -- the script uses the settings in micro-manager,
+optionally with the exception of exposure time, which can be provided through the script.
+
+Run the script using Python 3, giving a starting time/date, interval time in between pictures, 
+and end time/date. The time/date formats need to be local and in MM/DD/YYYY HH:MM:SS 24-hour format,
+although preceding zeros can be left out. For example, the following time/date strings are both
+accepted:
+
+04/04/2020 01:50:00
+4/4/2020 1:50:00
+
+The interval is input in HH:MM:SS format. For example, if the script is in the current directory,
+and you want to run an imaging experiment taking an image every two hours from 3/14/2020 at
+1:00 AM to 3/17/2020 at 5:00 PM, putting the acquired images in the directory "/home/acq", you
+would run:
+
+python3 imager.py "03/14/2020 01:00:00" "3/17/2020 17:00:00" "02:00:00" -o /home/acq
+
+Note that quotes need to be put around the time/date strings since they contain a space.
+
+
+########################
+# NOTES ON TIMEKEEPING #
+########################
+
+Timekeeping is, of course, rather complicated. This program is meant to faithfully take images
+every specified interval exactly, ignoring calendar adjustments like DST. As such, it should be
+safe to use across DST boundaries, since the program uses UNIX time and not clock time.
+
+One event could potentially throw off the program's timekeeping, at least for a brief period, though.
+While they are rare events and this is a rather extreme edge case, the program cannot faithfully
+keep time well across leap-second boundaries.
+
+Leap seconds are seconds added to the clock to keep universal coordinated time (UTC) -- the standard
+timekeeping system -- in sync with the Earth's rotation. These can occur at the end of any month,
+though currently all leap seconds have been added to the end of the day on June 30 and on
+the end of December 31. They do not happen every year and have become less frequent since the
+Earth's rotation rate has generally sped up over the last few decades. For more information see
+https://en.wikipedia.org/wiki/Leap_second
+
+UNIX time, in principle, does not count leap seconds, which is a problem in and of itself, but
+in practice the handling of the leap second is dependent on the operating system being used, and
+as such the way your system handles the leap second is unknown. In highly timing-critical
+applications, i.e. delayed fluorescence experiments, it may be best practice to not run experiments
+that acquire at midnight at the end of a month.
+
+The problem resolves itself after all involved computers synchronize to an Internet time server.
+>>>>>>> 2acafbc5e9f611fc40ddd0325e59d15e14a3592f
