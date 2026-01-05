@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-usage: helioscheduler.py [-h] [-o filename] start interval duration intensity
-
-positional arguments:
-  start        Start time.
-  interval     Interval between captures (cannot be 00:00:00).
-  duration     Duration of lights-off period (cannot be 00:00:00).
-  intensity    Intensity of lights when on (0 to 1000).
-
-optional arguments:
-  -h, --help   show this help message and exit
-  -o filename  File to output (default schedule.txt)
-=======
 usage: imager.py [-h] [-o OUT] [-e EXPOSURE] start end interval
 
 positional arguments:
@@ -18,22 +5,17 @@ positional arguments:
   end                   Ending date/time (24-hour, MM/DD/YYYY HH:MM:SS)
   interval              Interval between acquisitions (HH:MM:SS)
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -o OUT, --out OUT     Output directory (default current directory)
   -e EXPOSURE, --exposure EXPOSURE
-                        Exposure time in milliseconds (exposure set in micro-manager if not specified)
->>>>>>> 2acafbc5e9f611fc40ddd0325e59d15e14a3592f
-
+                        Exposure time in milliseconds (exposure set in micro-
+                        manager if not specified)
 
 ################
 # INSTALLATION #
 ################
 
-<<<<<<< HEAD
-The script requires Python 3. There are no other dependencies. Simply drop the .py file
-anywhere convenient.
-=======
 Just drop the .py file in any directory.
 
 This program depends on Python 3 and "PIL" and "pycromanager" Python packages. Install these on your
@@ -41,31 +23,11 @@ Python installation using pip:
 
 python3 -m pip install --upgrade Pillow
 python3 -m pip install --upgrade pycromanager
->>>>>>> 2acafbc5e9f611fc40ddd0325e59d15e14a3592f
 
 ###########
 # RUNNING #
 ###########
 
-<<<<<<< HEAD
-Run the script using Python 3, and provide it a start time (i.e. the time of the first acquisition)
-interval between lights-off periods, duration of the lights-off, and intensity of the lights in
-the 0-1000 scale used by the Heliospectra software. Note that this script will always set the
-5700K white lights to be off since they phosphoresce considerably.
-
-All times are in 24-hour local time. So, if an imaging experiment was run in constant light set
-to 150, with images being taken every two hours starting at 1:00 AM, and the lights-off period being
-seven minutes, the invocation would be
-
-python3 helioscheduler.py 01:00:00 02:00:00 00:05:00 150
-
-The script will then generate schedule.txt in the directory the script was run from. This can
-be loaded into the Heliospectra web interface directly.
-
-This script is not capable of generating a schedule for an LD imaging experiment since it does
-not have options for an extended dark period. However, this can be easily achieved by removing
-the appropriate entries from the schedule in the Heliospectra web interface.
-=======
 First, start micro-manager >=2.0. If this is your first time running this program, ensure that
 the micro-manager server is started by going to Tools->Options, and then ensuring
 "Run server on port 4827" is checked. Select the camera settings you want to use in the
@@ -116,4 +78,3 @@ applications, i.e. delayed fluorescence experiments, it may be best practice to 
 that acquire at midnight at the end of a month.
 
 The problem resolves itself after all involved computers synchronize to an Internet time server.
->>>>>>> 2acafbc5e9f611fc40ddd0325e59d15e14a3592f
