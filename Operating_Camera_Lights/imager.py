@@ -161,7 +161,7 @@ if __name__ == "__main__":
 		# I don't know what that means
 		tagged_image = core.get_tagged_image()
 		print('Image taken')
-		pixels = np.reshape(tagged_image.pix, newshape=[tagged_image.tags["Height"], tagged_image.tags["Width"]])
+		pixels = np.reshape(tagged_image.pix, [tagged_image.tags["Height"], tagged_image.tags["Width"]])
 		print(pixels)
 		img_process_fn(pixels, timestamp, outdir, errdir)
 		print('Image saved')
