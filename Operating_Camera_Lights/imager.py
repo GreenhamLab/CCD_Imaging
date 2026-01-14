@@ -8,15 +8,8 @@ PI: Katie Greenham (greenham@umn.edu)
 Changelog:
 	2021 - Original version by Stevan
 	2026-01-05 - Edits by William
-		Version 2.0.0 of the script stopped working after replacing the
-		computer used to control the camera. When attempting to acquire
-		an image through the Acquisition object the `acquisition`
-		method would not trigger the callback function `img_process_fn`
-		which saves the image. The low-level Micro-Manager Core API was
-		able to take images without issue. Documentation can be found
-		at the link below:
-
-		https://pycro-manager.readthedocs.io/en/latest/user_guide.html#low-level-apis
+		Switched to use MMCore api because old version stopped working because ???
+	2026-01-09 - Added info messages for when input times are incorrect
 
 Integrates with micro-manager using the pycromanager library to take time-series images at
 constant intervals starting and ending at a scheduled date/time.
@@ -134,12 +127,24 @@ if __name__ == "__main__":
 	errdir = 'error_' + str(uuid.uuid4())
 
 	i = 0
+
+	t_cur = time.time()
+	if sum(e>t_cur for e in epochs)==0:
+		if end_time < time.time():
+			print("End time is in the past, not taking any images.")
+		if start_time > end_time:
+			print("Start time is after end time, not taking any images.")
+		else:
+			print("No sample times in range (this may be a bug), not taking any images.")
+	print(f"Skipping {sum(t_cur>e for e in epochs)} time points")
+	epochs = [e for e in epochs if t_cur<e]
 	for t_target in epochs:
-		# skip over times that have already passed when starting the program
-		t_cur = time.time()
+		
+		
 		t_target_str = datetime.fromtimestamp(t_target).isoformat()
+
 		if t_cur > t_target:
-			#print('Skipping', t_target_str)
+			print('Warning skipping', t_target_str, 'exposure may have run in to next time point.')
 			continue
 
 		# delay loop -- wait until each event and then take a picture
